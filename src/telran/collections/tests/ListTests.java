@@ -2,7 +2,6 @@ package telran.collections.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,11 +9,11 @@ class ListTests {
 	
 	Integer[] numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 	List<Integer> list = Arrays.asList(numbers);
-	List<Integer> listMutable; 
+	ArrayList<Integer> listMutable; 
 	
 	@BeforeEach
 	void setUp() {
-		listMutable = new LinkedList<>(list); 
+		listMutable = new ArrayList<>(list); 
 	}
 	
 	@Test
@@ -58,8 +57,20 @@ class ListTests {
 		assertFalse(queue.contains(7));
 		listMutable.remove(7);
 		assertTrue(listMutable.contains(7));
-		
 	}
+	
+	@Test
+	void removeRepeatedTest() {
+		listMutable.addAll(Arrays.asList(numbers));
+		removeRepeated(listMutable);
+		assertArrayEquals(numbers, listMutable.toArray(Integer[]::new));
+	}
+
+	private void removeRepeated(List<Integer> list) {
+		HashSet<Integer> hashSet = new HashSet<Integer>(list);
+		listMutable = new ArrayList<Integer>(Arrays.asList(hashSet.toArray(Integer[]::new)));
+	}
+	
 }
 
 
