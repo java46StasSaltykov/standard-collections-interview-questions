@@ -1,6 +1,10 @@
 package telran.collections.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Arrays;
+import java.util.HashSet;
+
 import org.junit.jupiter.api.Test;
 
 class ArrayTests {
@@ -20,21 +24,16 @@ class ArrayTests {
 	 *         given array
 	 */
 	private boolean isHalfSumTwoNumbers(int[] array) {
-		boolean res = false;
-		int sum = 0;
-		int halfSum = 0;
-		for (int i = 0; i < array.length; i++) {
-			sum += array[i];
-			halfSum = (sum + array[i]) / 2;
-		}
-		for (int i = 0; i < array.length; i++) {
-			for (int j = i + 1; j < array.length - i; j++) {
-				if ((array[i] + array[j]) == halfSum) {
-					res = true;
-				}
+		int halfSum = Arrays.stream(array).sum() / 2;
+		HashSet<Integer> setHelper = new HashSet<>();
+		for (int num : array) {
+			if (setHelper.contains(halfSum - num)) {
+				return true;
 			}
+			setHelper.add(num);
 		}
-		return res;
+
+		return false;
 	}
 
 	@Test
@@ -53,17 +52,17 @@ class ArrayTests {
 	 *         returns -1
 	 */
 	private Integer valueWithMaxNegative(int[] array) {
-		int res = 0;
-		for (int i = 0; i < array.length; i++) {
-			if (array[i] > 0) {
-				for (int j = 0; j < array.length; j++) {
-					if (array[i] == (-1 * array[j]) && array[i] > res) {
-						res = array[i];
-					}
-				}
+		int res = -1;
+		HashSet<Integer> setHelper = new HashSet<>();
+		for (int num : array) {
+			int absNum = Math.abs(num);
+			if (setHelper.contains(-num) && absNum > res) {
+				res = absNum;
 			}
+			setHelper.add(num);
 		}
-		return res != 0 ? res : -1;
+
+		return res;
 	}
 
 }
