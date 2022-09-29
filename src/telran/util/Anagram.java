@@ -24,6 +24,9 @@ public class Anagram {
 		} else {
 			return false;
 		}
+		
+		// TODO
+		// figure out solution based on two methods of java 8 Map merge & compute
 	}
 
 	private static Map<Character, Integer> getCharOccurences(String string) {

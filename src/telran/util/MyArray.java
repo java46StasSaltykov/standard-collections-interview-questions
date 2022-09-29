@@ -1,66 +1,58 @@
 package telran.util;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
- * All methods of the class should have complexity of O[1]
- * @author 97252
+ * All methods of the class should have complexity O[1]
+ * 
  *
  * @param <T>
  */
 public class MyArray<T> {
 	
-	private Map<Integer, T> hashMap;
+	private T allValues;
 	private int size;
-	
+	private HashMap<Integer, T> mapOfSets;
+
 	public MyArray(int size) {
-		if (size < 0) {
-			throw new IllegalArgumentException("size must be positive number");
-		}
 		this.size = size;
-		hashMap = new HashMap<Integer, T>(size);
+		mapOfSets = new HashMap<>();
 	}
-	
+
 	/**
 	 * sets all array's elements with a given value
+	 * 
 	 * @param value
 	 */
 	public void setAll(T value) {
-		if (hashMap.isEmpty()) {
-			for (int i = 0; i < size; i++) {
-				hashMap.put(i, value);
-			}
-		} else {
-			for (int i = 0; i < size; i++) {
-				hashMap.replace(i, value);
-			}
-		}
+		mapOfSets = new HashMap<>();
+		allValues = value;
 	}
-	
+
 	/**
 	 * 
 	 * @param index
-	 * @return value at given index or null
+	 * @return value at given index or null if index is wrong
 	 */
-	public T get(int index) {		
-		return hashMap.get(index);
+	public T get(int index) {
+		T res = null;
+		if (index > -1 && index < size) {
+			res = mapOfSets.getOrDefault(index, allValues);
+		}
+		return res;
 	}
-	
+
 	/**
-	 * sets a given value at a given index
-	 * throws IndexOutOfBoundException in the case of wrong index
+	 * sets a given value at a given index throws IndexOutOfBoundsException in the
+	 * case of wrong index
+	 * 
 	 * @param index
 	 * @param value
 	 */
 	public void set(int index, T value) {
-		if (index < 0) {
-			throw new IndexOutOfBoundsException("index must be positive number");
+		if (index < 0 || index >= size) {
+			throw new IndexOutOfBoundsException(index);
 		}
-		if (hashMap.get(index) == null) {
-			hashMap.put(index, value);
-		} else {
-			hashMap.replace(index, value);
-		}
+		mapOfSets.put(index, value);
 	}
 }
