@@ -10,7 +10,7 @@ class AnagramTests {
 
 	@Test
 	void testIsAnagram() {
-		assertTrue(Anagram.isAnagram("listen", "silent"));
+		assertTrue(Anagram.isAnagram("Listen", "Silent"));
 		assertFalse(Anagram.isAnagram("abcdef", "abcddf"));
 		assertFalse(Anagram.isAnagram("yellow", "lowye"));
 	}

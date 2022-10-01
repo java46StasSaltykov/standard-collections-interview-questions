@@ -17,30 +17,22 @@ public class Anagram {
 		if (word.length() != anagram.length()) {
 			return false;
 		}
-		Map<Character, Integer> charOccurencesWord = getCharOccurences(word);
-		Map<Character, Integer> charOccurencesAnagram = getCharOccurences(anagram);
-		if (charOccurencesWord.equals(charOccurencesAnagram)) {
-			return true;
-		} else {
-			return false;
+		word = word.toLowerCase();
+		anagram = anagram.toLowerCase();
+		HashMap<Character, Integer> map = new HashMap<>();
+		int wordLength = word.length();
+		int anagramLength = anagram.length();
+		for (int i = 0; i < wordLength; i++) {
+			map.merge(word.charAt(i), 1, Integer::sum);
 		}
-		
-		// TODO
-		// figure out solution based on two methods of java 8 Map merge & compute
-	}
-
-	private static Map<Character, Integer> getCharOccurences(String string) {
-		Map<Character, Integer> hashMap = new HashMap<Character, Integer>();
-		char[] arr = string.toCharArray();
-		for (int i = 0; i < arr.length; i++) {
-			if (hashMap.get(arr[i]) == null) {
-				hashMap.put(arr[i], 1);
+		for (int i = 0; i < anagramLength; i++) {
+			if (map.containsKey(anagram.charAt(i)) && map.get(anagram.charAt(i)) > 0) {
+				map.compute(anagram.charAt(i), (key, value) -> value - 1);
 			} else {
-				Integer count = hashMap.get(arr[i]);
-				hashMap.put(arr[i], ++count);
+				return false;
 			}
 		}
-		return hashMap;
+		return true;
 	}
 	
 }
