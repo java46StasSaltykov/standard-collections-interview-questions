@@ -1,19 +1,11 @@
 package telran.collections.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.DynamicTest.stream;
-
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.function.ObjIntConsumer;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -49,6 +41,7 @@ class Java8StreamTests {
 	String[] technologies1 = {"Java", "SQL", "C++"};
 	String[] technologies2 = {"Java"};
 	String[] technologies3 = {"Java", "React", "SQL"};
+	private static final int N_NUMBERS = 1000000;
 	
 	@BeforeEach
 	void setUp() {
@@ -98,12 +91,11 @@ class Java8StreamTests {
 
 	@Test
 	void printDigitsOccurrences() {
-		Arrays.stream(new Random().ints(0, Integer.MAX_VALUE).limit(1000000)
-				.mapToObj(n -> Integer.toString(n))
-				.collect(Collectors.joining()).chars().map(n -> Character.getNumericValue(n))
-				.toArray()).boxed().collect(Collectors.groupingBy(t -> t, Collectors.counting()))
-				.entrySet().stream().sorted((e1, e2) -> Long.compare(e2.getValue(), e1.getValue()))
-				.forEach(n -> System.out.println(n.getKey() + ": " + n.getValue()));
+		new Random().ints(N_NUMBERS, 0, Integer.MAX_VALUE)
+		.mapToObj(Integer::toString).flatMapToInt(String::chars)
+		.boxed().collect(Collectors.groupingBy(n -> n, Collectors.counting()))
+		.entrySet().stream().sorted((e1, e2) -> Long.compare(e2.getValue(), e1.getValue()))
+		.forEach(e -> System.out.printf("%c: %d\n", e.getKey(), e.getValue()));
 	}
 	
 }
