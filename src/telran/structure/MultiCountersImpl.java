@@ -1,6 +1,7 @@
 package telran.structure;
 
 import java.util.*;
+import java.util.Map.Entry;
 
 public class MultiCountersImpl implements MultiCounters {
 	
@@ -42,15 +43,8 @@ public class MultiCountersImpl implements MultiCounters {
 
 	@Override
 	public Set<Object> getMaxItems() {
-		Integer maxCounter;
-		Set<Object> res;
-		try {
-			maxCounter = counters.lastKey();
-			res = counters.get(maxCounter);
-		} catch (Exception e) {
-			res = Collections.emptySet();
-		}
-		return res;
+		Entry<Integer, HashSet<Object>> maxCounter = counters.lastEntry();
+		return maxCounter != null ? maxCounter.getValue() : Collections.emptySet();
 	}
 
 }

@@ -52,7 +52,7 @@ class MultiCountersTest {
 		multiCounters.remove(123);
 		runArraySet(expected, multiCounters.getMaxItems());
 		multiCounters.remove("a");
-		Object expected2[] = { "c" };
+		Object expected2[] = { "b" };
 		runArraySet(expected2, multiCounters.getMaxItems());
 		multiCounters.remove("b");
 		runArraySet(new Object[0], multiCounters.getMaxItems());
@@ -62,7 +62,7 @@ class MultiCountersTest {
 	private void runArraySet(Object[] expected, Set<Object> maxItems) {
 		assertEquals(expected.length, maxItems.size());
 		for (Object item : expected) {
-			maxItems.contains(item);
+			assertTrue(maxItems.contains(item));
 		}
 
 	}
